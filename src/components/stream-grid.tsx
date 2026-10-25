@@ -141,7 +141,6 @@ export function StreamGrid() {
                     allowFullScreen
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="no-referrer"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-presentation allow-pointer-lock allow-popups allow-popups-to-escape-sandbox"
                   />
                   <div className="absolute bottom-2 left-2 right-2 flex justify-center">
                     <a

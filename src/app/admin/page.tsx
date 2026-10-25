@@ -31,12 +31,68 @@ function slug(s: string) {
     .replace(/(^-|-$)/g, "");
 }
 
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? "admin123";
+
 export default function AdminPage() {
-  const [items, setItems] = useState<AdminItem[]>(() => load());
+  const [authed, setAuthed] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return sessionStorage.getItem("admin-authed") === "1";
+  });
+  const [password, setPassword] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [items, setItems] = useState<AdminItem[]>(() => (authed ? load() : []));
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [time, setTime] = useState("");
   const [group, setGroup] = useState("admin");
+
+  function login() {
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem("admin-authed", "1");
+      setAuthed(true);
+      setItems(load());
+      setAuthError("");
+    } else {
+      setAuthError("كلمة المرور غير صحيحة");
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem("admin-authed");
+    setAuthed(false);
+    setItems([]);
+  }
+
+  if (!authed) {
+    return (
+      <main className="bg-surface text-foreground flex min-h-screen items-center justify-center">
+        <div className="border-border-subtle bg-surface-raised w-full max-w-sm rounded-xl border p-6 shadow-sm">
+          <h1 className="text-foreground text-lg font-bold">لوحة الإدارة</h1>
+          <p className="text-muted mt-1 text-sm">أدخل كلمة المرور للمتابعة</p>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") login();
+            }}
+            placeholder="كلمة المرور"
+            className="border-border-subtle bg-surface text-foreground placeholder:text-muted mt-4 w-full rounded-lg border px-3 py-2 text-sm"
+          />
+          {authError && <p className="mt-2 text-xs text-red-500">{authError}</p>}
+          <button
+            onClick={login}
+            className="bg-brand-600 mt-4 w-full rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-700"
+          >
+            دخول
+          </button>
+          <Link href="/" className="text-muted mt-3 block text-center text-xs hover:underline">
+            العودة للشبكة
+          </Link>
+        </div>
+      </main>
+    );
+  }
 
   function add() {
     if (!title.trim() || !url.trim()) return;
@@ -77,6 +133,12 @@ export default function AdminPage() {
               ← العودة للشبكة
             </Link>
             <h1 className="text-base font-bold sm:text-lg">لوحة الإدارة</h1>
+            <button
+              onClick={logout}
+              className="border-border-subtle text-muted hover:text-foreground mr-auto rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors"
+            >
+              خروج
+            </button>
           </div>
         </div>
       </header>
