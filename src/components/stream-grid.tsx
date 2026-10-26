@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { streams as defaultStreams, type StreamItem } from "@/data/streams";
 
 type AdminStream = StreamItem & { active?: boolean };
@@ -32,47 +32,36 @@ function loadAdminStreams(): StreamItem[] {
   }
 }
 
-function LazyFrame({ url, index = 0 }: { url: string; index?: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+function LazyFrame({ url, auto = false }: { url: string; auto?: boolean }) {
+  const [visible, setVisible] = useState(auto);
 
   useEffect(() => {
-    console.log("LazyFrame mount", url);
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) {
-          if (e.isIntersecting) {
-            const delay = index * 400;
-            setTimeout(() => setVisible(true), delay);
-            obs.disconnect();
-          }
-        }
-      },
-      { rootMargin: "200px" }
+    if (auto) setVisible(true);
+  }, [auto]);
+
+  if (!visible) {
+    return (
+      <div className="bg-surface-raised relative grid aspect-video w-full place-items-center">
+        <button
+          onClick={() => setVisible(true)}
+          className="bg-brand-600 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-700"
+        >
+          ▶ تشغيل
+        </button>
+      </div>
     );
-    obs.observe(el);
-    return () => {
-      console.log("LazyFrame unmount", url);
-      obs.disconnect();
-    };
-  }, [index, url]);
+  }
 
   return (
-    <div ref={ref} className="relative aspect-video w-full bg-black">
-      {visible ? (
-        <iframe
-          src={url}
-          className="absolute inset-0 h-full w-full"
-          loading="lazy"
-          allowFullScreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerPolicy="no-referrer"
-        />
-      ) : (
-        <div className="text-muted absolute inset-0 grid place-items-center text-xs">جاري التحميل…</div>
-      )}
+    <div className="relative aspect-video w-full bg-black">
+      <iframe
+        src={url}
+        className="absolute inset-0 h-full w-full"
+        loading="lazy"
+        allowFullScreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="no-referrer"
+      />
     </div>
   );
 }
@@ -159,7 +148,7 @@ export function StreamGrid() {
             : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         }`}
       >
-        {filtered.map((item, i) => {
+        {filtered.map((item) => {
           const isSelected = selected === item.id;
           return (
             <article
@@ -182,7 +171,7 @@ export function StreamGrid() {
                 </div>
                 <span className="text-muted text-xs">{isSelected ? "تصغير" : "تكبير"}</span>
               </button>
-              <LazyFrame url={proxyUrl(item.url)} index={i} />
+              <LazyFrame url={proxyUrl(item.url)} auto={isSelected} />
               {isSelected && (
                 <div className="flex justify-center px-3 py-2">
                   <a
