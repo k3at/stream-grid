@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { streams as defaultStreams, type StreamItem } from "@/data/streams";
 
 type AdminStream = StreamItem & { active?: boolean };
@@ -30,6 +30,46 @@ function loadAdminStreams(): StreamItem[] {
   } catch {
     return [];
   }
+}
+
+function LazyFrame({ url }: { url: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) {
+            setVisible(true);
+            obs.disconnect();
+          }
+        }
+      },
+      { rootMargin: "200px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} className="relative aspect-video w-full bg-black">
+      {visible ? (
+        <iframe
+          src={url}
+          className="absolute inset-0 h-full w-full"
+          loading="lazy"
+          allowFullScreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="no-referrer"
+        />
+      ) : (
+        <div className="text-muted absolute inset-0 grid place-items-center text-xs">جاري التحميل…</div>
+      )}
+    </div>
+  );
 }
 
 export function StreamGrid() {
@@ -137,16 +177,7 @@ export function StreamGrid() {
                 </div>
                 <span className="text-muted text-xs">{isSelected ? "تصغير" : "تكبير"}</span>
               </button>
-              <div className="relative aspect-video w-full bg-black">
-                <iframe
-                  src={proxyUrl(item.url)}
-                  className="absolute inset-0 h-full w-full"
-                  loading="lazy"
-                  allowFullScreen
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
+              <LazyFrame url={proxyUrl(item.url)} />
               {isSelected && (
                 <div className="flex justify-center px-3 py-2">
                   <a
