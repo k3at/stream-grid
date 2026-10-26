@@ -31,14 +31,28 @@ function groupOf(url) {
   return "other";
 }
 
+async function resolvePlayer(wrapperUrl) {
+  try {
+    const res = await fetch(wrapperUrl, { headers: { "User-Agent": "stream-grid-updater" } });
+    if (!res.ok) return wrapperUrl;
+    const html = await res.text();
+    const m = html.match(/<iframe[^>]*src=["']([^"']+)["']/i);
+    if (m && m[1]) return m[1].trim();
+    return wrapperUrl;
+  } catch {
+    return wrapperUrl;
+  }
+}
+
 const map = new Map();
 for (const r of raw) {
   if (!map.has(r.url)) {
+    const playerUrl = await resolvePlayer(r.url);
     map.set(r.url, {
       id: `${slugify(r.title)}-${slugify(r.url.split("/").pop() ?? r.url)}`,
       title: r.title,
       time: r.time,
-      url: r.url,
+      url: playerUrl,
       group: groupOf(r.url),
     });
   }
