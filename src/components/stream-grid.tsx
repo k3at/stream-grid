@@ -137,25 +137,26 @@ export function StreamGrid() {
                 </div>
                 <span className="text-muted text-xs">{isSelected ? "تصغير" : "تكبير"}</span>
               </button>
+              <div className="relative aspect-video w-full bg-black">
+                <iframe
+                  src={proxyUrl(item.url)}
+                  className="absolute inset-0 h-full w-full"
+                  loading="lazy"
+                  allowFullScreen
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
               {isSelected && (
-                <div className="relative aspect-video w-full bg-black">
-                  <iframe
-                    src={proxyUrl(item.url)}
-                    className="absolute inset-0 h-full w-full"
-                    allowFullScreen
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute bottom-2 left-2 right-2 flex justify-center">
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="rounded-lg bg-black/70 px-3 py-1.5 text-xs text-white backdrop-blur transition-colors hover:bg-black/90"
-                    >
-                      فتح في تبويب جديد
-                    </a>
-                  </div>
+                <div className="flex justify-center px-3 py-2">
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg bg-black/70 px-3 py-1.5 text-xs text-white backdrop-blur transition-colors hover:bg-black/90"
+                  >
+                    فتح في تبويب جديد
+                  </a>
                 </div>
               )}
             </article>
