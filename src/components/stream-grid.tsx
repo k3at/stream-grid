@@ -5,6 +5,14 @@ import { streams as defaultStreams, type StreamItem } from "@/data/streams";
 
 type AdminStream = StreamItem & { active?: boolean };
 
+const PROXY_BASE =
+  process.env.NEXT_PUBLIC_PROXY_URL ?? "https://stream-proxy.knowledgeable-xenon.workers.dev";
+
+function proxyUrl(url: string): string {
+  if (!url.includes("sportsonnline.click")) return url;
+  return `${PROXY_BASE}/?u=${encodeURIComponent(url)}`;
+}
+
 function loadAdminStreams(): StreamItem[] {
   if (typeof window === "undefined") return [];
   try {
@@ -136,7 +144,7 @@ export function StreamGrid() {
               {isSelected && (
                 <div className="relative aspect-video w-full bg-black">
                   <iframe
-                    src={item.url}
+                    src={proxyUrl(item.url)}
                     className="absolute inset-0 h-full w-full"
                     allowFullScreen
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
