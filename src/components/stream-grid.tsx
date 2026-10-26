@@ -32,18 +32,20 @@ function loadAdminStreams(): StreamItem[] {
   }
 }
 
-function LazyFrame({ url }: { url: string }) {
+function LazyFrame({ url, index = 0 }: { url: string; index?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    console.log("LazyFrame mount", url);
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) {
-            setVisible(true);
+            const delay = index * 400;
+            setTimeout(() => setVisible(true), delay);
             obs.disconnect();
           }
         }
@@ -51,8 +53,11 @@ function LazyFrame({ url }: { url: string }) {
       { rootMargin: "200px" }
     );
     obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+    return () => {
+      console.log("LazyFrame unmount", url);
+      obs.disconnect();
+    };
+  }, [index, url]);
 
   return (
     <div ref={ref} className="relative aspect-video w-full bg-black">
@@ -154,7 +159,7 @@ export function StreamGrid() {
             : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         }`}
       >
-        {filtered.map((item) => {
+        {filtered.map((item, i) => {
           const isSelected = selected === item.id;
           return (
             <article
@@ -177,7 +182,7 @@ export function StreamGrid() {
                 </div>
                 <span className="text-muted text-xs">{isSelected ? "تصغير" : "تكبير"}</span>
               </button>
-              <LazyFrame url={proxyUrl(item.url)} />
+              <LazyFrame url={proxyUrl(item.url)} index={i} />
               {isSelected && (
                 <div className="flex justify-center px-3 py-2">
                   <a
