@@ -6,7 +6,7 @@ import { streams as defaultStreams, type StreamItem } from "@/data/streams";
 type AdminStream = StreamItem & { active?: boolean };
 
 const PROXY_BASE =
-  process.env.NEXT_PUBLIC_PROXY_URL ?? "https://stream-proxy.knowledgeable-xenon.workers.dev";
+  process.env.NEXT_PUBLIC_PROXY_URL ?? "https://stream-proxy.alssamer.workers.dev";
 
 function proxyUrl(url: string): string {
   if (!url.includes("sportsonnline.click")) return url;
