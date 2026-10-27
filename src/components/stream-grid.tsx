@@ -79,10 +79,12 @@ function parseMinutes(t?: string): number | null {
   return Number(m[1]) * 60 + Number(m[2]);
 }
 
-function statusOf(time: string | undefined, now: Date): "live" | "upcoming" | "finished" | "unknown" {
+function statusOf(time: string | undefined, offset: number): "live" | "upcoming" | "finished" | "unknown" {
   const mm = parseMinutes(time);
   if (mm === null) return "unknown";
-  const nowMin = now.getHours() * 60 + now.getMinutes();
+  const d = new Date();
+  const utcMin = d.getUTCHours() * 60 + d.getUTCMinutes();
+  const nowMin = utcMin + offset * 60;
   if (nowMin < mm) return "upcoming";
   if (nowMin < mm + 120) return "live";
   return "finished";
@@ -93,7 +95,12 @@ export function StreamGrid() {
   const [filter, setFilter] = useState<string>("all");
   const [query, setQuery] = useState<string>("");
   const [liveOnly, setLiveOnly] = useState<boolean>(false);
-  const [now, setNow] = useState<Date>(() => new Date());
+  const [tzOffset, setTzOffset] = useState<number>(() => {
+    if (typeof window === "undefined") return 0;
+    const v = localStorage.getItem("tz-offset");
+    return v ? Number(v) : 0;
+  });
+  const [tick, setTick] = useState<number>(0);
   const [visibleCount, setVisibleCount] = useState<number>(12);
   const [adminStreams, setAdminStreams] = useState<StreamItem[]>(() => loadAdminStreams());
 
@@ -101,7 +108,7 @@ export function StreamGrid() {
     const onUpdate = () => setAdminStreams(loadAdminStreams());
     window.addEventListener("storage", onUpdate);
     window.addEventListener("admin-streams-updated", onUpdate as EventListener);
-    const timer = setInterval(() => setNow(new Date()), 60_000);
+    const timer = setInterval(() => setTick((t) => t + 1), 60_000);
     return () => {
       window.removeEventListener("storage", onUpdate);
       window.removeEventListener("admin-streams-updated", onUpdate as EventListener);
@@ -145,10 +152,10 @@ export function StreamGrid() {
       list = list.filter((s) => s.title.toLowerCase().includes(q));
     }
     if (liveOnly) {
-      list = list.filter((s) => statusOf(s.time, now) === "live");
+      list = list.filter((s) => statusOf(s.time, tzOffset) === "live");
     }
     return list;
-  }, [allStreams, filter, query, liveOnly, now]);
+  }, [allStreams, filter, query, liveOnly, tzOffset, tick]);
 
   const allGroups = useMemo(() => {
     const set = new Set<string>();
@@ -171,6 +178,24 @@ export function StreamGrid() {
           placeholder="بحث عن مباراة..."
           className="border-border-subtle bg-surface-raised text-foreground placeholder:text-muted min-w-[12rem] flex-1 rounded-lg border px-3 py-1.5 text-sm"
         />
+        <select
+          value={tzOffset}
+          onChange={(e) => {
+            const v = Number(e.target.value);
+            setTzOffset(v);
+            if (typeof window !== "undefined") localStorage.setItem("tz-offset", String(v));
+            setVisibleCount(12);
+          }}
+          className="border-border-subtle bg-surface-raised text-foreground rounded-lg border px-2 py-1.5 text-sm"
+          title="المنطقة الزمنية (UTC offset)"
+        >
+          {Array.from({ length: 29 }, (_, i) => i - 12).map((h) => (
+            <option key={h} value={h}>
+              UTC{h >= 0 ? "+" : ""}
+              {h}
+            </option>
+          ))}
+        </select>
         <button
           onClick={() => { setLiveOnly((v) => !v); setVisibleCount(12); }}
           className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
@@ -239,11 +264,11 @@ export function StreamGrid() {
                     {item.time ? `${item.time} • ` : ""}
                     {item.group}
                     {" • "}
-                    {statusOf(item.time, now) === "live"
+                    {statusOf(item.time, tzOffset) === "live"
                       ? "🔴 مباشر"
-                      : statusOf(item.time, now) === "upcoming"
+                      : statusOf(item.time, tzOffset) === "upcoming"
                       ? "⏳ قادم"
-                      : statusOf(item.time, now) === "finished"
+                      : statusOf(item.time, tzOffset) === "finished"
                       ? "✓ انتهى"
                       : ""}
                   </p>
