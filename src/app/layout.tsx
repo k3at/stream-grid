@@ -11,6 +11,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
+  manifest: "/manifest.json",
   metadataBase: new URL(site.url),
   title: {
     default: `${site.name} — ${site.tagline}`,
@@ -61,6 +62,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           تخطَّ إلى المحتوى
         </a>
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `if('serviceWorker' in navigator){navigator.serviceWorker.register('./sw.js').catch(()=>{});}`,
+          }}
+        />
       </body>
     </html>
   );

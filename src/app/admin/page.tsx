@@ -32,6 +32,14 @@ function slug(s: string) {
 }
 
 const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? "admin123";
+const ADMIN_PASSWORD_HASH = process.env.NEXT_PUBLIC_ADMIN_PASSWORD_HASH ?? "";
+
+async function sha256Hex(text: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+}
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState<boolean>(() => {
@@ -46,8 +54,14 @@ export default function AdminPage() {
   const [time, setTime] = useState("");
   const [group, setGroup] = useState("admin");
 
-  function login() {
-    if (password === ADMIN_PASSWORD) {
+  async function login() {
+    let ok = false;
+    if (ADMIN_PASSWORD_HASH) {
+      ok = (await sha256Hex(password)) === ADMIN_PASSWORD_HASH.toLowerCase();
+    } else {
+      ok = password === ADMIN_PASSWORD;
+    }
+    if (ok) {
       sessionStorage.setItem("admin-authed", "1");
       setAuthed(true);
       setItems(load());

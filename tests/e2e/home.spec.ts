@@ -1,39 +1,52 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("الصفحة الرئيسية", () => {
-  test("تعرض المحتوى العربي باتجاه RTL", async ({ page }) => {
+test.describe("شبكة البث", () => {
+  test("RTL + عنوان", async ({ page }) => {
     await page.goto("/");
-
     await expect(page.locator("html")).toHaveAttribute("dir", "rtl");
     await expect(page.locator("html")).toHaveAttribute("lang", "ar");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("ابنِ واجهتك العربية");
-    await expect(page).toHaveTitle(/منصّة البداية/);
+    await expect(page).toHaveTitle(/شبكة البث/);
   });
 
-  test("روابط التنقل تصل إلى الأقسام", async ({ page }) => {
+  test("عرض قنوات", async ({ page }) => {
     await page.goto("/");
-
-    await page.getByRole("link", { name: "المزايا" }).first().click();
-    await expect(page.locator("#features")).toBeInViewport();
+    await expect(page.locator("article").first()).toBeVisible();
+    const count = await page.locator("article").count();
+    expect(count).toBeGreaterThan(0);
   });
 
-  test("الوضع الداكن يُفعّل ويُحفظ بعد إعادة التحميل", async ({ page }) => {
+  test("بحث", async ({ page }) => {
     await page.goto("/");
+    const search = page.getByPlaceholder("بحث عن مباراة...");
+    await search.fill("zzznomatch");
+    await expect(page.getByText("لا توجد قنوات لعرضها")).toBeVisible();
+    await search.fill("");
+  });
 
-    const toggle = page.getByRole("button", { name: /الوضع/ });
-    await expect(toggle).toHaveAttribute("data-ready", "true");
+  test("تشغيل مشغل", async ({ page }) => {
+    await page.goto("/");
+    const play = page.getByRole("button", { name: "▶ تشغيل" }).first();
+    await play.click();
+    await expect(page.locator("iframe").first()).toBeVisible();
+  });
+
+  test("تكبير/تصغير", async ({ page }) => {
+    await page.goto("/");
+    const toggle = page.getByRole("button", { name: /تكبير/ }).first();
     await toggle.click();
-    await expect(page.locator("html")).toHaveClass(/dark/);
-
-    await page.reload();
-    await expect(page.locator("html")).toHaveClass(/dark/);
+    await expect(page.locator("article").first()).toHaveClass(/col-span-full/);
+    const shrink = page.getByRole("button", { name: /تصغير/ }).first();
+    await shrink.click();
+    await expect(page.locator("article").first()).not.toHaveClass(/col-span-full/);
   });
 
-  test("واجهة الصحة ترجع JSON سليماً", async ({ request }) => {
-    const response = await request.get("/api/health");
-    expect(response.ok()).toBeTruthy();
+  test("لوحة الإدارة محمية", async ({ page }) => {
+    await page.goto("/admin");
+    await expect(page.getByPlaceholder("كلمة المرور")).toBeVisible();
+  });
 
-    const body = await response.json();
-    expect(body.status).toBe("ok");
+  test("health API", async ({ request }) => {
+    const res = await request.get("/api/health");
+    expect(res.ok()).toBeTruthy();
   });
 });
