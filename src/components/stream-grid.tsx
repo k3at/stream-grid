@@ -33,17 +33,15 @@ function loadAdminStreams(): StreamItem[] {
 }
 
 function LazyFrame({ url, auto = false }: { url: string; auto?: boolean }) {
-  const [visible, setVisible] = useState(auto);
-
-  useEffect(() => {
-    if (auto) setVisible(true);
-  }, [auto]);
+  const [clicked, setClicked] = useState(false);
+  const [retryKey, setRetryKey] = useState(0);
+  const visible = auto || clicked;
 
   if (!visible) {
     return (
       <div className="bg-surface-raised relative grid aspect-video w-full place-items-center">
         <button
-          onClick={() => setVisible(true)}
+          onClick={() => setClicked(true)}
           className="bg-brand-600 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-700"
         >
           ▶ تشغيل
@@ -55,6 +53,7 @@ function LazyFrame({ url, auto = false }: { url: string; auto?: boolean }) {
   return (
     <div className="relative aspect-video w-full bg-black">
       <iframe
+        key={retryKey}
         src={url}
         className="absolute inset-0 h-full w-full"
         loading="lazy"
@@ -62,6 +61,13 @@ function LazyFrame({ url, auto = false }: { url: string; auto?: boolean }) {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="no-referrer"
       />
+      <button
+        onClick={() => setRetryKey((k) => k + 1)}
+        className="absolute bottom-2 left-2 rounded-lg bg-black/70 px-2 py-1 text-xs text-white backdrop-blur transition-colors hover:bg-black/90"
+        title="إعادة المحاولة"
+      >
+        ↻
+      </button>
     </div>
   );
 }
@@ -69,6 +75,8 @@ function LazyFrame({ url, auto = false }: { url: string; auto?: boolean }) {
 export function StreamGrid() {
   const [selected, setSelected] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
+  const [query, setQuery] = useState<string>("");
+  const [visibleCount, setVisibleCount] = useState<number>(12);
   const [adminStreams, setAdminStreams] = useState<StreamItem[]>(() => loadAdminStreams());
 
   useEffect(() => {
@@ -81,6 +89,26 @@ export function StreamGrid() {
     };
   }, []);
 
+  // reset handled in change handlers
+
+  // sync selected with URL hash
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const applyHash = () => {
+      const h = window.location.hash.replace(/^#/, "");
+      if (h) setSelected(h);
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (selected) window.location.hash = selected;
+    else if (window.location.hash) window.location.hash = "";
+  }, [selected]);
+
   const allStreams = useMemo(() => {
     const combined = [...defaultStreams, ...adminStreams];
     const map = new Map<string, StreamItem>();
@@ -91,9 +119,13 @@ export function StreamGrid() {
   }, [adminStreams]);
 
   const filtered = useMemo(() => {
-    if (filter === "all") return allStreams;
-    return allStreams.filter((s) => s.group === filter);
-  }, [allStreams, filter]);
+    let list = filter === "all" ? allStreams : allStreams.filter((s) => s.group === filter);
+    if (query.trim()) {
+      const q = query.trim().toLowerCase();
+      list = list.filter((s) => s.title.toLowerCase().includes(q));
+    }
+    return list;
+  }, [allStreams, filter, query]);
 
   const allGroups = useMemo(() => {
     const set = new Set<string>();
@@ -110,8 +142,14 @@ export function StreamGrid() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-2">
+        <input
+          value={query}
+          onChange={(e) => { setQuery(e.target.value); setVisibleCount(12); }}
+          placeholder="بحث عن مباراة..."
+          className="border-border-subtle bg-surface-raised text-foreground placeholder:text-muted min-w-[12rem] flex-1 rounded-lg border px-3 py-1.5 text-sm"
+        />
         <button
-          onClick={() => setFilter("all")}
+          onClick={() => { setFilter("all"); setVisibleCount(12); }}
           className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
             filter === "all"
               ? "bg-brand-600 text-white"
@@ -123,7 +161,7 @@ export function StreamGrid() {
         {allGroups.map((g) => (
           <button
             key={g}
-            onClick={() => setFilter(g)}
+            onClick={() => { setFilter(g); setVisibleCount(12); }}
             className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
               filter === g
                 ? "bg-brand-600 text-white"
@@ -148,7 +186,7 @@ export function StreamGrid() {
             : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"
         }`}
       >
-        {filtered.map((item) => {
+        {filtered.slice(0, visibleCount).map((item) => {
           const isSelected = selected === item.id;
           return (
             <article
@@ -188,6 +226,17 @@ export function StreamGrid() {
           );
         })}
       </div>
+
+      {visibleCount < filtered.length && (
+        <div className="flex justify-center">
+          <button
+            onClick={() => setVisibleCount((c) => c + 12)}
+            className="border-border-subtle bg-surface-raised text-muted hover:text-foreground rounded-lg border px-4 py-2 text-sm font-medium transition-colors"
+          >
+            تحميل المزيد ({filtered.length - visibleCount})
+          </button>
+        </div>
+      )}
 
       {filtered.length === 0 && (
         <p className="text-muted py-10 text-center text-sm">لا توجد قنوات لعرضها</p>
