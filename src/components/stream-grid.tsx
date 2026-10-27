@@ -72,10 +72,28 @@ function LazyFrame({ url, auto = false }: { url: string; auto?: boolean }) {
   );
 }
 
+function parseMinutes(t?: string): number | null {
+  if (!t) return null;
+  const m = t.match(/^(\d{1,2}):(\d{2})$/);
+  if (!m) return null;
+  return Number(m[1]) * 60 + Number(m[2]);
+}
+
+function statusOf(time: string | undefined, now: Date): "live" | "upcoming" | "finished" | "unknown" {
+  const mm = parseMinutes(time);
+  if (mm === null) return "unknown";
+  const nowMin = now.getHours() * 60 + now.getMinutes();
+  if (nowMin < mm) return "upcoming";
+  if (nowMin < mm + 120) return "live";
+  return "finished";
+}
+
 export function StreamGrid() {
   const [selected, setSelected] = useState<string | null>(null);
   const [filter, setFilter] = useState<string>("all");
   const [query, setQuery] = useState<string>("");
+  const [liveOnly, setLiveOnly] = useState<boolean>(false);
+  const [now, setNow] = useState<Date>(() => new Date());
   const [visibleCount, setVisibleCount] = useState<number>(12);
   const [adminStreams, setAdminStreams] = useState<StreamItem[]>(() => loadAdminStreams());
 
@@ -83,9 +101,11 @@ export function StreamGrid() {
     const onUpdate = () => setAdminStreams(loadAdminStreams());
     window.addEventListener("storage", onUpdate);
     window.addEventListener("admin-streams-updated", onUpdate as EventListener);
+    const timer = setInterval(() => setNow(new Date()), 60_000);
     return () => {
       window.removeEventListener("storage", onUpdate);
       window.removeEventListener("admin-streams-updated", onUpdate as EventListener);
+      clearInterval(timer);
     };
   }, []);
 
@@ -124,8 +144,11 @@ export function StreamGrid() {
       const q = query.trim().toLowerCase();
       list = list.filter((s) => s.title.toLowerCase().includes(q));
     }
+    if (liveOnly) {
+      list = list.filter((s) => statusOf(s.time, now) === "live");
+    }
     return list;
-  }, [allStreams, filter, query]);
+  }, [allStreams, filter, query, liveOnly, now]);
 
   const allGroups = useMemo(() => {
     const set = new Set<string>();
@@ -148,6 +171,16 @@ export function StreamGrid() {
           placeholder="بحث عن مباراة..."
           className="border-border-subtle bg-surface-raised text-foreground placeholder:text-muted min-w-[12rem] flex-1 rounded-lg border px-3 py-1.5 text-sm"
         />
+        <button
+          onClick={() => { setLiveOnly((v) => !v); setVisibleCount(12); }}
+          className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
+            liveOnly
+              ? "bg-red-600 text-white"
+              : "border-border-subtle bg-surface-raised text-muted hover:text-foreground border"
+          }`}
+        >
+          🔴 مباشر
+        </button>
         <button
           onClick={() => { setFilter("all"); setVisibleCount(12); }}
           className={`rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
@@ -205,6 +238,14 @@ export function StreamGrid() {
                   <p className="text-muted text-xs">
                     {item.time ? `${item.time} • ` : ""}
                     {item.group}
+                    {" • "}
+                    {statusOf(item.time, now) === "live"
+                      ? "🔴 مباشر"
+                      : statusOf(item.time, now) === "upcoming"
+                      ? "⏳ قادم"
+                      : statusOf(item.time, now) === "finished"
+                      ? "✓ انتهى"
+                      : ""}
                   </p>
                 </div>
                 <span className="text-muted text-xs">{isSelected ? "تصغير" : "تكبير"}</span>

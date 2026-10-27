@@ -8,48 +8,6 @@ export type StreamItem = {
 
 export const streams: StreamItem[] = [
   {
-    "id": "uni-n-santa-fe-x-estudiantes-hd10-php",
-    "title": "Unión Santa Fe x Estudiantes",
-    "time": "22:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd10.php",
-    "group": "hd"
-  },
-  {
-    "id": "coritiba-x-gr-mio-br3-php",
-    "title": "Coritiba x Grêmio",
-    "time": "22:30",
-    "url": "https://ww1.sportsonnline.click/channels/bra/br3.php",
-    "group": "bra"
-  },
-  {
-    "id": "flamengo-x-atl-tico-mineiro-br1-php",
-    "title": "Flamengo x Atlético Mineiro",
-    "time": "23:00",
-    "url": "https://ww1.sportsonnline.click/channels/bra/br1.php",
-    "group": "bra"
-  },
-  {
-    "id": "nba-chicago-bulls-boston-celtics-sporttv1-php",
-    "title": "NBA: Chicago Bulls @ Boston Celtics",
-    "time": "23:30",
-    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv1.php",
-    "group": "pt"
-  },
-  {
-    "id": "nfl-cowboys-eagles-hd1-php",
-    "title": "NFL: Cowboys @ Eagles",
-    "time": "00:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd1.php",
-    "group": "hd"
-  },
-  {
-    "id": "instituto-x-deportivo-riestra-hd11-php",
-    "title": "Instituto x Deportivo Riestra",
-    "time": "00:15",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd11.php",
-    "group": "hd"
-  },
-  {
     "id": "estoril-u23-x-santa-clara-u23-sporttv5-php",
     "title": "Estoril U23 x Santa Clara U23",
     "time": "11:00",
@@ -97,6 +55,20 @@ export const streams: StreamItem[] = [
     "time": "17:00",
     "url": "https://ww1.sportsonnline.click/channels/bra/br6.php",
     "group": "bra"
+  },
+  {
+    "id": "sonnenhof-gro-aspach-x-augsburg-hd10-php",
+    "title": "Sonnenhof Großaspach x Augsburg",
+    "time": "17:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd10.php",
+    "group": "hd"
+  },
+  {
+    "id": "bochum-x-mainz-05-hd11-php",
+    "title": "Bochum x Mainz 05",
+    "time": "17:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd11.php",
+    "group": "hd"
   },
   {
     "id": "rot-weiss-essen-x-rb-leipzig-hd4-php",
@@ -148,6 +120,13 @@ export const streams: StreamItem[] = [
     "group": "hd"
   },
   {
+    "id": "fleetwood-town-x-arsenal-hd1-php",
+    "title": "Fleetwood Town x Arsenal",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd1.php",
+    "group": "hd"
+  },
+  {
     "id": "fleetwood-town-x-arsenal-br2-php",
     "title": "Fleetwood Town x Arsenal",
     "time": "20:00",
@@ -155,11 +134,32 @@ export const streams: StreamItem[] = [
     "group": "bra"
   },
   {
+    "id": "sporting-cp-x-mar-timo-sporttv1-php",
+    "title": "Sporting CP x Marítimo",
+    "time": "20:15",
+    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv1.php",
+    "group": "pt"
+  },
+  {
     "id": "freiburg-x-wolfsburg-eleven2-php",
     "title": "Freiburg x Wolfsburg",
     "time": "17:00",
     "url": "https://ww1.sportsonnline.click/channels/pt/eleven2.php",
     "group": "pt"
+  },
+  {
+    "id": "santos-x-palmeiras-br1-php",
+    "title": "Santos x Palmeiras",
+    "time": "22:30",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br1.php",
+    "group": "bra"
+  },
+  {
+    "id": "fluminense-x-internacional-br3-php",
+    "title": "Fluminense x Internacional",
+    "time": "22:30",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br3.php",
+    "group": "bra"
   },
   {
     "id": "rb-bragantino-x-chapecoense-br4-php",
@@ -178,7 +178,7 @@ export const streams: StreamItem[] = [
 ];
 
 export const groups: string[] = [
+  "pt",
   "hd",
-  "bra",
-  "pt"
+  "bra"
 ];
