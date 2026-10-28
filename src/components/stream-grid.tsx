@@ -171,7 +171,7 @@ export function StreamGrid() {
 
   return (
     <div className="space-y-4">
-      <div className="glass flex flex-wrap items-center gap-2 rounded-2xl p-3">
+      <div className="glass flex flex-wrap items-center gap-3 rounded-2xl p-4 shadow-sm">
         <input
           value={query}
           onChange={(e) => { setQuery(e.target.value); setVisibleCount(12); }}
@@ -238,7 +238,7 @@ export function StreamGrid() {
       </div>
 
       <div
-        className={`grid gap-2 transition-all ${
+        className={`grid gap-3 transition-all ${
           selected
             ? "grid-cols-1"
             : "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6"

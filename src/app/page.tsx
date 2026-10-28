@@ -28,7 +28,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <section className="container-page py-4 sm:py-6">
+      <section className="container-page py-6 sm:py-8">
         <StreamGrid />
       </section>
     </main>

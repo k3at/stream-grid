@@ -22,11 +22,12 @@
   --color-accent-500: #10b981;
   --color-accent-600: #059669;
 
-  --color-surface: #f8fafc;
+  --color-surface: #f1f5f9;
   --color-surface-raised: #ffffff;
+  --color-surface-2: #e2e8f0;
   --color-foreground: #0f172a;
-  --color-muted: #55637a;
-  --color-border-subtle: #e2e8f0;
+  --color-muted: #475569;
+  --color-border-subtle: #cbd5e1;
 
   --radius-card: 1.25rem;
   --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -12px rgb(15 23 42 / 0.18);
@@ -75,7 +76,7 @@
     margin-inline: auto;
     width: 100%;
     max-width: 72rem;
-    padding-inline: 1.25rem;
+    padding-inline: 1.5rem;
   }
 
   .card-surface {
@@ -123,11 +124,12 @@
 
 /* الوضع الداكن: يُفعَّل بإضافة الصنف dark على عنصر html */
 html.dark {
-  --color-surface: #0b1020;
-  --color-surface-raised: #131a31;
-  --color-foreground: #eef2ff;
-  --color-muted: #a5b0c9;
-  --color-border-subtle: #24304f;
+  --color-surface: #0a0f1e;
+  --color-surface-raised: #141b2d;
+  --color-surface-2: #1e2740;
+  --color-foreground: #e8ecf7;
+  --color-muted: #9aa6c3;
+  --color-border-subtle: #2a3558;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 18px 40px -18px rgb(0 0 0 / 0.7);
   --shadow-glow: 0 0 0 1px rgb(99 102 241 / 0.25), 0 8px 24px -8px rgb(99 102 241 / 0.45);
   color-scheme: dark;
