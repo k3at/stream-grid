@@ -8,11 +8,11 @@ export type StreamItem = {
 
 export const streams: StreamItem[] = [
   {
-    "id": "estoril-u23-x-santa-clara-u23-sporttv5-php",
-    "title": "Estoril U23 x Santa Clara U23",
-    "time": "11:00",
-    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv5.php",
-    "group": "pt"
+    "id": "kars-36-x-antalyaspor-hd10-php",
+    "title": "Kars 36 x Antalyaspor",
+    "time": "10:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd10.php",
+    "group": "hd"
   },
   {
     "id": "tennis-atp-world-tour-500-vienna-sporttv3-php",
@@ -29,116 +29,53 @@ export const streams: StreamItem[] = [
     "group": "pt"
   },
   {
-    "id": "inter-b-x-scafatese-hd8-php",
-    "title": "Inter B x Scafatese",
-    "time": "13:30",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd8.php",
-    "group": "hd"
-  },
-  {
-    "id": "hamburger-sv-x-eintracht-frankfurt-hd9-php",
-    "title": "Hamburger SV x Eintracht Frankfurt",
-    "time": "17:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd9.php",
-    "group": "hd"
-  },
-  {
-    "id": "hamburger-sv-x-eintracht-frankfurt-eleven1-php",
-    "title": "Hamburger SV x Eintracht Frankfurt",
-    "time": "17:00",
-    "url": "https://ww1.sportsonnline.click/channels/pt/eleven1.php",
-    "group": "pt"
-  },
-  {
-    "id": "hamburger-sv-x-eintracht-frankfurt-br6-php",
-    "title": "Hamburger SV x Eintracht Frankfurt",
-    "time": "17:00",
-    "url": "https://ww1.sportsonnline.click/channels/bra/br6.php",
-    "group": "bra"
-  },
-  {
-    "id": "sonnenhof-gro-aspach-x-augsburg-hd10-php",
-    "title": "Sonnenhof Großaspach x Augsburg",
-    "time": "17:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd10.php",
-    "group": "hd"
-  },
-  {
-    "id": "bochum-x-mainz-05-hd11-php",
-    "title": "Bochum x Mainz 05",
-    "time": "17:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd11.php",
-    "group": "hd"
-  },
-  {
-    "id": "rot-weiss-essen-x-rb-leipzig-hd4-php",
-    "title": "Rot-Weiss Essen x RB Leipzig",
-    "time": "17:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd4.php",
-    "group": "hd"
-  },
-  {
-    "id": "sassuolo-x-lazio-hd7-php",
-    "title": "Sassuolo x Lazio",
+    "id": "milan-x-bologna-hd7-php",
+    "title": "Milan x Bologna",
     "time": "17:30",
     "url": "https://ww1.sportsonnline.click/channels/hd/hd7.php",
     "group": "hd"
   },
   {
-    "id": "sassuolo-x-lazio-sporttv2-php",
-    "title": "Sassuolo x Lazio",
+    "id": "milan-x-bologna-sporttv1-php",
+    "title": "Milan x Bologna",
+    "time": "17:30",
+    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv1.php",
+    "group": "pt"
+  },
+  {
+    "id": "milan-x-bologna-br6-php",
+    "title": "Milan x Bologna",
+    "time": "17:30",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br6.php",
+    "group": "bra"
+  },
+  {
+    "id": "parma-x-udinese-hd9-php",
+    "title": "Parma x Udinese",
+    "time": "17:30",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd9.php",
+    "group": "hd"
+  },
+  {
+    "id": "venezia-x-internazionale-hd8-php",
+    "title": "Venezia x Internazionale",
+    "time": "17:30",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd8.php",
+    "group": "hd"
+  },
+  {
+    "id": "venezia-x-internazionale-sporttv2-php",
+    "title": "Venezia x Internazionale",
     "time": "17:30",
     "url": "https://ww1.sportsonnline.click/channels/pt/sporttv2.php",
     "group": "pt"
   },
   {
-    "id": "pinatar-x-elche-hd5-php",
-    "title": "Pinatar x Elche",
-    "time": "18:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd5.php",
-    "group": "hd"
-  },
-  {
-    "id": "sestao-river-x-espanyol-hd6-php",
-    "title": "Sestao River x Espanyol",
-    "time": "18:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd6.php",
-    "group": "hd"
-  },
-  {
-    "id": "bradford-city-x-peterborough-united-hd2-php",
-    "title": "Bradford City x Peterborough United",
-    "time": "19:45",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd2.php",
-    "group": "hd"
-  },
-  {
-    "id": "borussia-dortmund-x-werder-bremen-hd3-php",
-    "title": "Borussia Dortmund x Werder Bremen",
-    "time": "19:45",
+    "id": "freiburg-x-wolfsburg-hd3-php",
+    "title": "Freiburg x Wolfsburg",
+    "time": "17:00",
     "url": "https://ww1.sportsonnline.click/channels/hd/hd3.php",
     "group": "hd"
-  },
-  {
-    "id": "fleetwood-town-x-arsenal-hd1-php",
-    "title": "Fleetwood Town x Arsenal",
-    "time": "20:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd1.php",
-    "group": "hd"
-  },
-  {
-    "id": "fleetwood-town-x-arsenal-br2-php",
-    "title": "Fleetwood Town x Arsenal",
-    "time": "20:00",
-    "url": "https://ww1.sportsonnline.click/channels/bra/br2.php",
-    "group": "bra"
-  },
-  {
-    "id": "sporting-cp-x-mar-timo-sporttv1-php",
-    "title": "Sporting CP x Marítimo",
-    "time": "20:15",
-    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv1.php",
-    "group": "pt"
   },
   {
     "id": "freiburg-x-wolfsburg-eleven2-php",
@@ -146,6 +83,69 @@ export const streams: StreamItem[] = [
     "time": "17:00",
     "url": "https://ww1.sportsonnline.click/channels/pt/eleven2.php",
     "group": "pt"
+  },
+  {
+    "id": "paderborn-x-stuttgart-hd4-php",
+    "title": "Paderborn x Stuttgart",
+    "time": "17:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd4.php",
+    "group": "hd"
+  },
+  {
+    "id": "paderborn-x-stuttgart-eleven1-php",
+    "title": "Paderborn x Stuttgart",
+    "time": "17:00",
+    "url": "https://ww1.sportsonnline.click/channels/pt/eleven1.php",
+    "group": "pt"
+  },
+  {
+    "id": "bayern-w-x-real-madrid-w-hd11-php",
+    "title": "Bayern W x Real Madrid W",
+    "time": "17:45",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd11.php",
+    "group": "hd"
+  },
+  {
+    "id": "manchester-city-x-brighton-hove-albion-hd2-php",
+    "title": "Manchester City x Brighton & Hove Albion",
+    "time": "19:30",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd2.php",
+    "group": "hd"
+  },
+  {
+    "id": "afc-bournemouth-x-aston-villa-sporttv5-php",
+    "title": "AFC Bournemouth x Aston Villa",
+    "time": "19:45",
+    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv5.php",
+    "group": "pt"
+  },
+  {
+    "id": "liverpool-x-chelsea-hd1-php",
+    "title": "Liverpool x Chelsea",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd1.php",
+    "group": "hd"
+  },
+  {
+    "id": "liverpool-x-chelsea-br2-php",
+    "title": "Liverpool x Chelsea",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br2.php",
+    "group": "bra"
+  },
+  {
+    "id": "salamanca-uds-x-celta-de-vigo-hd6-php",
+    "title": "Salamanca UDS x Celta de Vigo",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd6.php",
+    "group": "hd"
+  },
+  {
+    "id": "tavernes-x-valencia-hd5-php",
+    "title": "Tavernes x Valencia",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd5.php",
+    "group": "hd"
   },
   {
     "id": "santos-x-palmeiras-br1-php",
@@ -178,7 +178,7 @@ export const streams: StreamItem[] = [
 ];
 
 export const groups: string[] = [
-  "pt",
   "hd",
+  "pt",
   "bra"
 ];
