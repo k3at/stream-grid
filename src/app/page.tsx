@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import Link from "next/link";
 import { StreamGrid } from "@/components/stream-grid";
 
 export const metadata: Metadata = {
@@ -25,6 +26,12 @@ export default function HomePage() {
             </div>
           </div>
           <p className="text-muted hidden text-xs sm:block">انقر على قناة لتكبيرها، وانقر مجدداً للعودة للشبكة</p>
+          <Link
+            href="/channels"
+            className="border-border-subtle bg-surface-raised text-muted hover:text-foreground rounded-lg border px-3 py-1.5 text-sm font-medium transition-colors"
+          >
+            قنوات 1-100
+          </Link>
         </div>
       </header>
 

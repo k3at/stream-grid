@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { streams as defaultStreams, type StreamItem } from "@/data/streams";
+import { koraChannels } from "@/data/kora-channels";
 
 type AdminStream = StreamItem & { active?: boolean };
 
@@ -137,7 +138,7 @@ export function StreamGrid() {
   }, [selected]);
 
   const allStreams = useMemo(() => {
-    const combined = [...defaultStreams, ...adminStreams];
+    const combined = [...defaultStreams, ...koraChannels, ...adminStreams];
     const map = new Map<string, StreamItem>();
     for (const s of combined) {
       if (!map.has(s.url)) map.set(s.url, s);
