@@ -30,6 +30,8 @@
 
   --radius-card: 1.25rem;
   --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -12px rgb(15 23 42 / 0.18);
+  --shadow-glow: 0 0 0 1px rgb(99 102 241 / 0.15), 0 8px 24px -8px rgb(99 102 41 / 0.35);
+  --radius-xl: 1.5rem;
 }
 
 @layer base {
@@ -86,6 +88,24 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .glass {
+    background: linear-gradient(135deg, rgb(255 255 255 / 0.7), rgb(255 255 255 / 0.4));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  html.dark .glass {
+    background: linear-gradient(135deg, rgb(19 26 49 / 0.7), rgb(19 26 49 / 0.4));
+  }
+
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+    border-color: var(--color-brand-300);
+  }
 }
 
 @layer utilities {
@@ -109,5 +129,6 @@ html.dark {
   --color-muted: #a5b0c9;
   --color-border-subtle: #24304f;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 18px 40px -18px rgb(0 0 0 / 0.7);
+  --shadow-glow: 0 0 0 1px rgb(99 102 241 / 0.25), 0 8px 24px -8px rgb(99 102 241 / 0.45);
   color-scheme: dark;
 }

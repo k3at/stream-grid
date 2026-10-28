@@ -42,7 +42,7 @@ function LazyFrame({ url, auto = false }: { url: string; auto?: boolean }) {
       <div className="bg-surface-raised relative grid aspect-video w-full place-items-center">
         <button
           onClick={() => setClicked(true)}
-          className="bg-brand-600 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-700"
+          className="from-brand-600 to-accent-500 rounded-xl bg-gradient-to-l px-5 py-2.5 text-sm font-semibold text-white shadow-md transition-transform hover:scale-105"
         >
           ▶ تشغيل
         </button>
@@ -171,12 +171,12 @@ export function StreamGrid() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="glass flex flex-wrap items-center gap-2 rounded-2xl p-3">
         <input
           value={query}
           onChange={(e) => { setQuery(e.target.value); setVisibleCount(12); }}
           placeholder="بحث عن مباراة..."
-          className="border-border-subtle bg-surface-raised text-foreground placeholder:text-muted min-w-[12rem] flex-1 rounded-lg border px-3 py-1.5 text-sm"
+          className="border-border-subtle bg-surface text-foreground placeholder:text-muted min-w-[12rem] flex-1 rounded-xl border px-3 py-2 text-sm shadow-sm focus:border-brand-400 focus:outline-none"
         />
         <select
           value={tzOffset}
@@ -249,8 +249,8 @@ export function StreamGrid() {
           return (
             <article
               key={item.id}
-              className={`border-border-subtle bg-surface-raised overflow-hidden rounded-xl border shadow-sm transition-all ${
-                isSelected ? "col-span-full" : ""
+              className={`border-border-subtle bg-surface-raised card-hover overflow-hidden rounded-2xl border shadow-sm transition-all ${
+                isSelected ? "col-span-full ring-2 ring-brand-400" : ""
               }`}
             >
               <button
