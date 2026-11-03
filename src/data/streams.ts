@@ -8,46 +8,11 @@ export type StreamItem = {
 
 export const streams: StreamItem[] = [
   {
-    "id": "new-england-x-inter-miami-hd1-php",
-    "title": "New England x Inter Miami",
-    "time": "00:00",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd1.php",
-    "group": "hd"
-  },
-  {
-    "id": "nhl-anaheim-ducks-ottawa-senators-sporttv2-php",
-    "title": "NHL: Anaheim Ducks @ Ottawa Senators",
-    "time": "01:00",
-    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv2.php",
-    "group": "pt"
-  },
-  {
-    "id": "cruz-azul-x-le-n-hd9-php",
-    "title": "Cruz Azul x León",
-    "time": "01:10",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd9.php",
-    "group": "hd"
-  },
-  {
-    "id": "portland-timbers-x-houston-dynamo-hd10-php",
-    "title": "Portland Timbers x Houston Dynamo",
-    "time": "02:45",
-    "url": "https://ww1.sportsonnline.click/channels/hd/hd10.php",
-    "group": "hd"
-  },
-  {
-    "id": "pakhtakor-x-al-nassr-hd2-php",
-    "title": "Pakhtakor x Al Nassr",
-    "time": "13:45",
+    "id": "al-sadd-x-al-ahli-hd2-php",
+    "title": "Al Sadd x Al-Ahli",
+    "time": "16:00",
     "url": "https://ww1.sportsonnline.click/channels/hd/hd2.php",
     "group": "hd"
-  },
-  {
-    "id": "pakhtakor-x-al-nassr-br6-php",
-    "title": "Pakhtakor x Al Nassr",
-    "time": "13:45",
-    "url": "https://ww1.sportsonnline.click/channels/bra/br6.php",
-    "group": "bra"
   },
   {
     "id": "atromitos-x-volos-nfc-hd4-php",
@@ -99,11 +64,46 @@ export const streams: StreamItem[] = [
     "group": "pt"
   },
   {
+    "id": "atalanta-x-parma-sporttv2-php",
+    "title": "Atalanta x Parma",
+    "time": "19:45",
+    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv2.php",
+    "group": "pt"
+  },
+  {
+    "id": "red-star-x-nancy-hd9-php",
+    "title": "Red Star x Nancy",
+    "time": "19:45",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd9.php",
+    "group": "hd"
+  },
+  {
+    "id": "reims-x-sochaux-hd10-php",
+    "title": "Reims x Sochaux",
+    "time": "19:45",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd10.php",
+    "group": "hd"
+  },
+  {
+    "id": "newcastle-united-x-everton-hd1-php",
+    "title": "Newcastle United x Everton",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/hd/hd1.php",
+    "group": "hd"
+  },
+  {
     "id": "newcastle-united-x-everton-eleven1-php",
     "title": "Newcastle United x Everton",
     "time": "20:00",
     "url": "https://ww1.sportsonnline.click/channels/pt/eleven1.php",
     "group": "pt"
+  },
+  {
+    "id": "newcastle-united-x-everton-br6-php",
+    "title": "Newcastle United x Everton",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br6.php",
+    "group": "bra"
   },
   {
     "id": "deportivo-la-coru-a-x-osasuna-hd6-php",
@@ -145,6 +145,41 @@ export const streams: StreamItem[] = [
     "title": "Bragantino x Santos",
     "time": "23:00",
     "url": "https://ww1.sportsonnline.click/channels/bra/br1.php",
+    "group": "bra"
+  },
+  {
+    "id": "shakhtar-donetsk-x-sporting-cp-sporttv5-php",
+    "title": "Shakhtar Donetsk x Sporting CP",
+    "time": "17:45",
+    "url": "https://ww1.sportsonnline.click/channels/pt/sporttv5.php",
+    "group": "pt"
+  },
+  {
+    "id": "atl-tico-madrid-x-bayern-m-nchen-eleven3-php",
+    "title": "Atlético Madrid x Bayern München",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/pt/eleven3.php",
+    "group": "pt"
+  },
+  {
+    "id": "manchester-united-x-roma-br3-php",
+    "title": "Manchester United x Roma",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br3.php",
+    "group": "bra"
+  },
+  {
+    "id": "villarreal-x-psg-br5-php",
+    "title": "Villarreal x PSG",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br5.php",
+    "group": "bra"
+  },
+  {
+    "id": "feyenoord-x-internazionale-br4-php",
+    "title": "Feyenoord x Internazionale",
+    "time": "20:00",
+    "url": "https://ww1.sportsonnline.click/channels/bra/br4.php",
     "group": "bra"
   }
 ];
